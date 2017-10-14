@@ -134,4 +134,175 @@ user_pref("social.directories", "");
 user_pref("social.share.activationPanelEnabled", false);
 user_pref("social.enabled", false); // (hidden pref)
 
+/*** 0500: SYSTEM EXTENSIONS / EXPERIMENTS
+     System extensions are a method for shipping extensions, considered to be
+     built-in features to Firefox, that are hidden from the about:addons UI.
+     To view your system extensions go to about:support, they are listed under "Firefox Features"
+
+     Some system extensions have no on-off prefs. Instead you can manually remove them. Note that app
+     updates will restore them. They may also be updated and possibly restored automatically (see 0505)
+     * Portable: "...\App\Firefox64\browser\features\" (or "App\Firefox\etc" for 32bit)
+     * Windows: "...\Program Files\Mozilla\browser\features" (or "Program Files (X86)\etc" for 32bit)
+     * Mac: "...\Applications\Firefox\Contents\Resources\browser\features\"
+            [NOTE] On Mac you can right-click on the application and select "Show Package Contents"
+     * Linux: "/usr/lib/firefox/browser/features" (or similar)
+
+     [1] https://firefox-source-docs.mozilla.org/toolkit/mozapps/extensions/addon-manager/SystemAddons.html
+     [2] https://dxr.mozilla.org/mozilla-central/source/browser/extensions
+***/
+user_pref("_user.js.parrot", "0500 syntax error: the parrot's cashed in 'is chips!");
+/* 0501: disable experiments
+ * [1] https://wiki.mozilla.org/Telemetry/Experiments ***/
+user_pref("experiments.enabled", false);
+user_pref("experiments.manifest.uri", "");
+user_pref("experiments.supported", false);
+user_pref("experiments.activeExperiment", false);
+/* 0502: disable Mozilla permission to silently opt you into tests ***/
+user_pref("network.allow-experiments", false);
+/* 0505: block URL used for system extension updates (FF44+)
+ * [NOTE] You will not get any system extension updates except when you update Firefox ***/
+   // user_pref("extensions.systemAddon.update.url", "");
+/* 0510: disable Pocket (FF39+)
+ * Pocket is a third party (now owned by Mozilla) "save for later" cloud service
+ * [1] https://en.wikipedia.org/wiki/Pocket_(application)
+ * [2] https://www.gnu.gl/blog/Posts/multiple-vulnerabilities-in-pocket/ ***/
+user_pref("extensions.pocket.enabled", false);
+/* 0511: disable FlyWeb (FF49+)
+ * Flyweb is a set of APIs for advertising and discovering local-area web servers
+ * [1] https://flyweb.github.io/
+ * [2] https://wiki.mozilla.org/FlyWeb/Security_scenarios
+ * [3] https://www.ghacks.net/2016/07/26/firefox-flyweb/ ***/
+user_pref("dom.flyweb.enabled", false);
+/* 0512: disable Shield (FF53+)
+ * Shield is an telemetry system (including Heartbeat) that can also push and test "recipes"
+ * [1] https://wiki.mozilla.org/Firefox/Shield
+ * [2] https://github.com/mozilla/normandy ***/
+user_pref("extensions.shield-recipe-client.enabled", false);
+user_pref("extensions.shield-recipe-client.api_url", "");
+/* 0513: disable Follow On Search (FF53+)
+ * Just DELETE the XPI file in your system extensions directory
+ * [1] https://blog.mozilla.org/data/2017/06/05/measuring-search-in-firefox/ ***/
+/* 0514: disable Activity Stream (FF54+)
+ * Activity Stream replaces "New Tab" with one based on metadata and browsing behavior,
+ * and includes telemetry as well as web content such as snippets and "spotlight"
+ * [1] https://wiki.mozilla.org/Firefox/Activity_Stream
+ * [2] https://www.ghacks.net/2016/02/15/firefox-mockups-show-activity-stream-new-tab-page-and-share-updates/ ***/
+user_pref("browser.newtabpage.activity-stream.enabled", false);
+/* 0515: disable Screenshots (FF55+)
+ * [1] https://github.com/mozilla-services/screenshots
+ * [2] https://www.ghacks.net/2017/05/28/firefox-screenshots-integrated-in-firefox-nightly/ ***/
+   // user_pref("extensions.screenshots.disabled", true);
+/* 0516: disable Onboarding (FF55+)
+ * Onboarding is an interactive tour/setup for new installs/profiles and features. Every time
+ * about:home or about:newtab is opened, the onboarding overlay is injected into that page
+ * [NOTE] Onboarding uses Google Analytics [2], and leaks resource://URIs [3]
+ * [1] https://wiki.mozilla.org/Firefox/Onboarding
+ * [2] https://github.com/mozilla/onboard/commit/db4d6c8726c89a5d6a241c1b1065827b525c5baf
+ * [3] https://bugzilla.mozilla.org/show_bug.cgi?id=863246#c154 ***/
+user_pref("browser.onboarding.enabled", false);
+/* 0517: disable Form Autofill (FF55+)
+ * [SETTING-56+] Options>Privacy & Security>Forms & Passwords>Enable Profile Autofill
+ * [SETTING-ESR] Options>Privacy>Forms & Passwords>Enable Profile Autofill
+ * [NOTE] Stored data is NOT secure (uses a JSON file)
+ * [NOTE] Heuristics controls Form Autofill on forms without @autocomplete attributes
+ * [1] https://wiki.mozilla.org/Firefox/Features/Form_Autofill
+ * [2] https://www.ghacks.net/2017/05/24/firefoxs-new-form-autofill-is-awesome/ ***/
+user_pref("extensions.formautofill.addresses.enabled", false);
+user_pref("extensions.formautofill.available", "off"); // (FF56+)
+user_pref("extensions.formautofill.creditCards.enabled", false); // (FF56+)
+user_pref("extensions.formautofill.heuristics.enabled", false);
+/* 0518: disable Web Compatibility Reporter (FF56+)
+ * Web Compatibility Reporter adds a "Report Site Issue" button to send data to Mozilla ***/
+user_pref("extensions.webcompat-reporter.enabled", false);
+
+/*** 0600: BLOCK IMPLICIT OUTBOUND [not explicitly asked for - e.g. clicked on] ***/
+user_pref("_user.js.parrot", "0600 syntax error: the parrot's no more!");
+/* 0601: disable link prefetching
+ * [1] https://developer.mozilla.org/docs/Web/HTTP/Link_prefetching_FAQ ***/
+user_pref("network.prefetch-next", false);
+/* 0602: disable DNS prefetching
+ * [1] https://www.ghacks.net/2013/04/27/firefox-prefetching-what-you-need-to-know/
+ * [2] https://developer.mozilla.org/docs/Web/HTTP/Headers/X-DNS-Prefetch-Control ***/
+user_pref("network.dns.disablePrefetch", true);
+user_pref("network.dns.disablePrefetchFromHTTPS", true); // (hidden pref)
+/* 0603a: disable Seer/Necko
+ * [1] https://developer.mozilla.org/docs/Mozilla/Projects/Necko ***/
+user_pref("network.predictor.enabled", false);
+/* 0603b: disable more Necko/Captive Portal
+ * [1] https://en.wikipedia.org/wiki/Captive_portal
+ * [2] https://wiki.mozilla.org/Necko/CaptivePortal
+ * [3] https://trac.torproject.org/projects/tor/ticket/21790 ***/
+user_pref("captivedetect.canonicalURL", "");
+user_pref("network.captive-portal-service.enabled", false); // (FF52+)
+/* 0605: disable link-mouseover opening connection to linked server
+ * [1] https://news.slashdot.org/story/15/08/14/2321202/how-to-quash-firefoxs-silent-requests
+ * [2] https://www.ghacks.net/2015/08/16/block-firefox-from-connecting-to-sites-when-you-hover-over-links/ ***/
+user_pref("network.http.speculative-parallel-limit", 0);
+/* 0606: disable pings (but enforce same host in case)
+ * [1] http://kb.mozillazine.org/Browser.send_pings
+ * [2] http://kb.mozillazine.org/Browser.send_pings.require_same_host ***/
+user_pref("browser.send_pings", false);
+user_pref("browser.send_pings.require_same_host", true);
+/* 0607: disable links launching Windows Store on Windows 8/8.1/10 [WINDOWS]
+ * [1] https://www.ghacks.net/2016/03/25/block-firefox-chrome-windows-store/ ***/
+user_pref("network.protocol-handler.external.ms-windows-store", false);
+/* 0608: disable predictor / prefetching (FF48+) ***/
+user_pref("network.predictor.enable-prefetch", false);
+
+/*** 2000: MEDIA / CAMERA / MIC ***/
+user_pref("_user.js.parrot", "2000 syntax error: the parrot's snuffed it!");
+/* 2001: disable WebRTC (Web Real-Time Communication)
+ * [1] https://www.privacytools.io/#webrtc ***/
+user_pref("media.peerconnection.enabled", false);
+user_pref("media.peerconnection.use_document_iceservers", false);
+user_pref("media.peerconnection.video.enabled", false);
+user_pref("media.peerconnection.identity.enabled", false);
+user_pref("media.peerconnection.identity.timeout", 1);
+user_pref("media.peerconnection.turn.disable", true);
+user_pref("media.peerconnection.ice.tcp", false);
+user_pref("media.navigator.video.enabled", false); // video capability for WebRTC
+/* 2002: limit WebRTC IP leaks if using WebRTC
+ * [1] https://bugzilla.mozilla.org/show_bug.cgi?id=1189041
+ * [2] https://bugzilla.mozilla.org/show_bug.cgi?id=1297416
+ * [3] https://wiki.mozilla.org/Media/WebRTC/Privacy ***/
+user_pref("media.peerconnection.ice.default_address_only", true); // (FF42-FF50)
+user_pref("media.peerconnection.ice.no_host", true); // (FF51+)
+/* 2010: disable WebGL (Web Graphics Library), force bare minimum feature set if used & disable WebGL extensions
+ * [1] https://www.contextis.com/resources/blog/webgl-new-dimension-browser-exploitation/
+ * [2] https://security.stackexchange.com/questions/13799/is-webgl-a-security-concern ***/
+user_pref("webgl.disabled", true);
+user_pref("pdfjs.enableWebGL", false);
+user_pref("webgl.min_capability_mode", true);
+user_pref("webgl.disable-extensions", true);
+user_pref("webgl.disable-fail-if-major-performance-caveat", true);
+/* 2011: disable WebGL debug info being available to websites
+ * [1] https://bugzilla.mozilla.org/show_bug.cgi?id=1171228
+ * [2] https://developer.mozilla.org/docs/Web/API/WEBGL_debug_renderer_info ***/
+user_pref("webgl.enable-debug-renderer-info", false);
+/* 2012: disable two more webgl preferences (FF51+) ***/
+user_pref("webgl.dxgl.enabled", false); // [WINDOWS]
+user_pref("webgl.enable-webgl2", false);
+/* 2022: disable screensharing ***/
+user_pref("media.getusermedia.screensharing.enabled", false);
+user_pref("media.getusermedia.screensharing.allowed_domains", "");
+user_pref("media.getusermedia.browser.enabled", false);
+user_pref("media.getusermedia.audiocapture.enabled", false);
+/* 2023: disable camera stuff ***/
+user_pref("camera.control.face_detection.enabled", false);
+/* 2026: disable canvas capture stream
+ * [1] https://developer.mozilla.org/docs/Web/API/HTMLCanvasElement/captureStream ***/
+user_pref("canvas.capturestream.enabled", false);
+/* 2027: disable camera image capture
+ * [1] https://trac.torproject.org/projects/tor/ticket/16339 ***/
+user_pref("dom.imagecapture.enabled", false);
+/* 2028: disable offscreen canvas
+ * [1] https://developer.mozilla.org/docs/Web/API/OffscreenCanvas ***/
+user_pref("gfx.offscreencanvas.enabled", false);
+/* 2030: disable auto-play of HTML5 media
+ * [WARNING] This may break video playback on various sites ***/
+user_pref("media.autoplay.enabled", false);
+/* 2031: disable audio auto-play in non-active tabs (FF51+)
+ * [1] https://www.ghacks.net/2016/11/14/firefox-51-blocks-automatic-audio-playback-in-non-active-tabs/ ***/
+user_pref("media.block-autoplay-until-in-foreground", true);
+
 
