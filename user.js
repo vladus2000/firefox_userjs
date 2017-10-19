@@ -36,6 +36,87 @@ user_pref("toolkit.telemetry.archive.enabled", false);
 user_pref("toolkit.telemetry.enabled", false);
 user_pref("toolkit.telemetry.unified", false);
 
+// pyllyukko rips:
+
+// PREF: Disable DOM timing API
+// https://wiki.mozilla.org/Security/Reviews/Firefox/NavigationTimingAPI
+// https://www.w3.org/TR/navigation-timing/#privacy
+user_pref("dom.enable_performance",				false);
+
+// PREF: Make sure the User Timing API does not provide a new high resolution timestamp
+// https://trac.torproject.org/projects/tor/ticket/16336
+// https://www.w3.org/TR/2013/REC-user-timing-20131212/#privacy-security
+user_pref("dom.enable_user_timing",				false);
+
+// PREF: Disable raw TCP socket support (mozTCPSocket)
+// https://trac.torproject.org/projects/tor/ticket/18863
+// https://www.mozilla.org/en-US/security/advisories/mfsa2015-97/
+// https://developer.mozilla.org/docs/Mozilla/B2G_OS/API/TCPSocket
+user_pref("dom.mozTCPSocket.enabled", false);
+
+// PREF: Disable leaking network/browser connection information via Javascript
+// Network Information API provides general information about the system's connection type (WiFi, cellular, etc.)
+// https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API
+// https://wicg.github.io/netinfo/#privacy-considerations
+// https://bugzilla.mozilla.org/show_bug.cgi?id=960426
+user_pref("dom.netinfo.enabled", false);
+
+// PREF: Disable battery API (Firefox < 52)
+// https://developer.mozilla.org/en-US/docs/Web/API/BatteryManager
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1313580
+user_pref("dom.battery.enabled",				false);
+
+// PREF: Disable telephony API
+// https://wiki.mozilla.org/WebAPI/Security/WebTelephony
+user_pref("dom.telephony.enabled",				false);
+
+// PREF: Disable speech recognition
+// https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html
+// https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
+// https://wiki.mozilla.org/HTML5_Speech_API
+user_pref("media.webspeech.recognition.enable",			false);
+
+// PREF: Disable sensor API
+// https://wiki.mozilla.org/Sensor_API
+user_pref("device.sensors.enabled", false);
+
+// PREF: Disable gamepad API to prevent USB device enumeration
+// https://www.w3.org/TR/gamepad/
+// https://trac.torproject.org/projects/tor/ticket/13023
+user_pref("dom.gamepad.enabled",				false);
+
+// PREF: Disable virtual reality devices APIs
+// https://developer.mozilla.org/en-US/Firefox/Releases/36#Interfaces.2FAPIs.2FDOM
+// https://developer.mozilla.org/en-US/docs/Web/API/WebVR_API
+user_pref("dom.vr.enabled",					false);
+
+// PREF: Disable vibrator API
+user_pref("dom.vibrator.enabled",           false);
+
+// PREF: Disable resource timing API
+// https://www.w3.org/TR/resource-timing/#privacy-security
+user_pref("dom.enable_resource_timing",				false);
+
+// PREF: Disable Archive API (Firefox < 54)
+// https://wiki.mozilla.org/WebAPI/ArchiveAPI
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1342361
+user_pref("dom.archivereader.enabled",				false);
+
+// PREF: Send DNS request through SOCKS when SOCKS proxying is in use
+// https://trac.torproject.org/projects/tor/wiki/doc/TorifyHOWTO/WebBrowsers
+user_pref("network.proxy.socks_remote_dns",			true);
+
+// PREF: Don't monitor OS online/offline connection state
+// https://trac.torproject.org/projects/tor/ticket/18945
+user_pref("network.manage-offline-status",			false);
+
+// PREF: Disable JAR from opening Unsafe File Types
+// http://kb.mozillazine.org/Network.jar.open-unsafe-types
+// CIS Mozilla Firefox 24 ESR v1.0.0 - 3.7 
+user_pref("network.jar.open-unsafe-types", false);
+
+// ghacks rips start here:
+
 /* 0101: disable "slow startup" options
  * warnings, disk history, welcomes, intros, EULA, default browser check ***/
 user_pref("browser.slowStartup.notificationDisabled", true);
