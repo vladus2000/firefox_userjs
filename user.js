@@ -35,6 +35,7 @@ user_pref("social.toast-notifications.enabled", false);
 user_pref("toolkit.telemetry.archive.enabled", false);
 user_pref("toolkit.telemetry.enabled", false);
 user_pref("toolkit.telemetry.unified", false);
+user_pref("browser.showQuitWarning", true);
 
 // pyllyukko rips:
 
