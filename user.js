@@ -37,6 +37,13 @@ user_pref("toolkit.telemetry.enabled", false);
 user_pref("toolkit.telemetry.unified", false);
 user_pref("browser.showQuitWarning", true);
 
+// tips from privacytools.io
+user_pref("privacy.firstparty.isolate", true);
+user_pref("browser.urlbar.speculativeConnect.enabled", false);
+user_pref("dom.event.clipboardevents.enabled", false);
+user_pref("geo.enabled", false);
+user_pref("webgl.disabled", false);
+
 // pyllyukko rips:
 
 // PREF: Disable DOM timing API
